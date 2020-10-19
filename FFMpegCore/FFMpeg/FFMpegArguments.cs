@@ -36,6 +36,24 @@ namespace FFMpegCore
         public static FFMpegArguments FromDemuxConcatenation(params string[] files) => new FFMpegArguments(new DemuxConcatArgument(files));
         public static FFMpegArguments FromPipe(IPipeSource writer) => new FFMpegArguments(new InputPipeArgument(writer));
 
+        public static FFMpegArguments FromScreenCapture(
+            ScreenCaptureMethod method,
+            string? videoSize = null,
+            int? xOffset = null,
+            int? yOffset = null,
+            bool showRegion = false,
+            int captureFramerate = 30,
+            bool showCursor = true,
+            string? captureTarget = null
+        ) =>
+            new FFMpegArguments(new ScreenCaptureInputArgument(method,
+                videoSize,
+                xOffset,
+                yOffset,
+                showRegion,
+                captureFramerate,
+                showCursor,
+                captureTarget));
         
         public FFMpegArguments WithAudioCodec(Codec audioCodec) => WithArgument(new AudioCodecArgument(audioCodec));
         public FFMpegArguments WithAudioCodec(string audioCodec) => WithArgument(new AudioCodecArgument(audioCodec));
